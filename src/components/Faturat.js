@@ -52,9 +52,11 @@ function Faturat (props)  {
        
           
   {data.map((dat, index) => (
+
       
 
 <form id="form1">
+  
 <div className="card text-center" style={marginBottom}>
   <div className="card-header">
    <h2>FaturaID: {dat.id} </h2>
