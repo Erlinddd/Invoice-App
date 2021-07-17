@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useRef}from 'react'
+import React,{useState,useEffect,useRef, useContext}from 'react'
 import  axios from 'axios'
 import {Button,ButtonGroup,Fade} from 'react-bootstrap'
 import FaturaCard from './FaturaCard';
@@ -6,18 +6,15 @@ import {Link} from 'react-router-dom'
 import {withRouter} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faTrash,faPlus } from '@fortawesome/free-solid-svg-icons';
-
+  
 const marginBottom={
-    marginBottom:"20px"
-    
-      };
-
+    marginBottom:"20px"};
+   
 function Faturat (props)  {
 
     const[data,setData]=useState([{}])
     const [fatura,setFatura]=useState([])
- 
-
+    
     useEffect(() => {          
         const GetData = async () => {  
           const result = await axios.get(`https://localhost:44362/api/fatura`);  
@@ -44,10 +41,9 @@ function Faturat (props)  {
 
         });  
     };
-
-
+ 
     return ( 
-
+     
         <div>
        
           
@@ -56,7 +52,6 @@ function Faturat (props)  {
       
 
 <form id="form1">
-  
 <div className="card text-center" style={marginBottom}>
   <div className="card-header">
    <h2>FaturaID: {dat.id} </h2>
@@ -77,8 +72,15 @@ function Faturat (props)  {
           <Button size="lg"  onClick={() => { deleteFatura(dat.id) }}className="btn btn-lg btn-outline-danger" style={{marginLeft:"5px"}} >   <FontAwesomeIcon icon={faTrash} /></Button>
           </ButtonGroup>
 
-  
-
+          
+      {({theme, toggleTheme}) => (
+        <button
+          onClick={toggleTheme}
+          style={{backgroundColor: theme.background}}>
+          Toggle Theme
+        </button>
+      )}
+    
 
 
   </div>

@@ -20,6 +20,7 @@
     "@testing-library/user-event": "^12.8.3",
     "axios": "^0.21.1",
     "bootstrap": "^4.6.0",
+    "framer-motion": "^4.1.17",
     "http-proxy-middleware": "^1.2.1",
     "moment": "^2.29.1",
     "print-js": "^1.6.0",

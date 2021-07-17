@@ -5,6 +5,9 @@ import "./Login.css";
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify';
+import {motion} from 'framer-motion';
+
+
 toast.configure();
 const changeColor={
     color:"white" };
@@ -13,47 +16,60 @@ const changeColor={
   useEffect(()=>{
     toast("Please log in to use  FaturaApp")
   },[])
-  const [user, setUser] = useState({Email:'',password:''});
-    const  apiUrl="https://jsonplaceholder.typicode.com/users";
+  const [user,setUser]=useState('')
+  const [UserName, setUserName] = useState('');
+  const [Password,setPassword]=useState('');
+  const [error,setError]=useState(false);
+  const [loading,setLoading]=useState(false);
+  const[show,setShow]=useState(false)
+
+    const  apiUrl="https://localhost:44362/api/login/authenticate";
 
   function validateForm() {
-     return user.email.length > 0 && user.password.length > 0;
+     return UserName.length > 0 && Password.length > 0;
    }
+   
 
   const loginUser=(e)=>{
-    e.preventDefault();
-    const data={Email:user.Email,password:user.password}
-    axios.post(apiUrl,data)
-    .then((result)=>{
-      console.log(result.data)
- localStorage.setItem('token',result.token)
-      var a=localStorage.getItem('myDataForReg');
-      console.log("A:",a);
-      const user=result.data;
-      console.log(result.data);
-      if(result.data.status=-"200")
-      props.history.push('/Welcome')
-      else
-      alert('ERROR')
-    })
-  }
+    e.preventDefault()
+    let item={UserName,Password};
+    
+    axios.post(apiUrl,item).then(response=>{
+      setLoading(false);
+      alert("Log In Success")
+      localStorage.setItem("user",UserName)
+      setShow({"show":true})
+    
+           setTimeout(() => setShow({"show":false}), 3000);
+           setTimeout(() => loginList(),1000) 
 
-
-  // function handleSubmit(event) {
-  //   event.preventDefault();
-  //   props.history.push('/Welcome')
-
-  // }
+   localStorage.setItem("token",response.data)
  
+    }).catch (error=>{
+      setLoading(false);
+     
+      if (error.response.status=== 401 || error.response.status===400)
+      {
+        alert("Username or Password are incorrect!")
+      }
+      
+    })
 
-  const onChange=(e)=>{
-    e.persist();
-    setUser({...user,[e.target.name]:e.target.value});
   }
+
+  const loginList=()=>{
+    props.history.push('/Welcome')
+  }
+
+  
   return (
-    <div className="Login">
+    <motion.div className="Login"
+    initial={{x:'-100vh'}}
+    animate={{x:0}}
+    transition={{type:'spring',stiffness:120}}
+    >
        <div className="text-center" style={changeColor}>  
-                  <h1 className="h4 text-gray-900 mb-4">Login</h1>  
+                  <motion.h1 className="h4 text-gray-900 mb-4">Login</motion.h1>  
                 </div> 
       <Form onSubmit={loginUser}>
         <Form.Group size="lg" controlId="email">
@@ -62,8 +78,8 @@ const changeColor={
             autoFocus
             type="email"
             name="email"
-            value={user.email}
-            onChange={onChange}
+            value={UserName}
+            onChange={e=>setUserName(e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
@@ -71,14 +87,11 @@ const changeColor={
           <Form.Control
             type="password"
             name="password"
-            value={user.password}
-            onChange={onChange}
+            value={Password}
+            onChange={e=>setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={()=>{
-          
-            validateForm()
-        }}>
+        <Button block size="lg" type="submit" disabled={()=>{   validateForm()}}>
           Login
         </Button>
 <br/>
@@ -87,7 +100,7 @@ const changeColor={
                 </p>
       </Form>
       
-    </div>
+    </motion.div>
   );
 }
 export default withRouter(Login)

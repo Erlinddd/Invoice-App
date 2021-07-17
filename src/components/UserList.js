@@ -26,9 +26,14 @@ const UserList = (props) => {
             GetData(); 
         },[])
 
+       
 
         const deleteConsumer = (id) => {  
-              axios.delete('https://localhost:44362/api/bleresi/' + id)  
+              axios.delete('https://localhost:44362/api/bleresi/' + id,{
+                headers:{
+                  "Authorization":'Bearer'+localStorage.getItem("token")
+                }
+              })  
                 .then((result) => {  
                alert("Deleted succesfully") 
                props.history.push('/bleresi')

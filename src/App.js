@@ -16,6 +16,7 @@ import Login from './components/Login';
 import RegistrationForm from './components/RegistrationForm';
 import ArticleListDDL  from './components/ArticleListDDL';
 import NotFound from './components/NotFound';
+import ThemeContextProvider from './context/ThemeContextProvider';
 
 const App=({props})=> {
   
@@ -44,6 +45,9 @@ const nav={
                <Route  exact path="/" component={Login} >
                  <Login/>
                </Route>
+            
+
+         
 
                <Route path="/Registration">
             <RegistrationForm/>
@@ -67,6 +71,7 @@ const nav={
           <Route path="/faturaCard/:id">
             <FaturaCard />
           </Route>
+         
     
           <Route path="/add">
             <AddArticle />
@@ -81,6 +86,9 @@ const nav={
             <Welcome />
          
           </Route>
+
+
+         
           <Route   path="/faturat">
             <Faturat />
           </Route>
@@ -91,10 +99,11 @@ const nav={
           <Route  path="/editt/bleresi/:id">
             <EditConsumer />
           </Route>
-          
+         
        
           
           </div>
+   
           <Route  component={NotFound} /> 
                </Switch>
           

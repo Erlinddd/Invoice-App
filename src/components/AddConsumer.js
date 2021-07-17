@@ -6,17 +6,16 @@ import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-so
 import {withRouter,useHistory} from 'react-router-dom';
 import MyToast from './myToast'
 import {useState,useEffect} from 'react'
-
+import axiosInstance from './axios'
 
 const AddConsumer = (props) => {
     const [consumer, setConsumer] = useState({ FirstName: '', LastName: '', Street: '', City: '', PostalCode: '', Contact: '' });  
-    const apiUrl = "https://localhost:44362/api/bleresi";
-    
+
     const InsertConsumer = (e) => {  
             e.preventDefault();  
             debugger;  
             const data = { FirstName:consumer.FirstName, LastName: consumer.LastName, Street: consumer.Street, City:consumer.City, PostalCode: consumer.PostalCode, Contact: consumer.Contact };  
-            axios.post(apiUrl, data)  
+            axiosInstance.post("/bleresi", data)  
               .then((result) => {  
                 props.history.push('/lista/bleresi')
             

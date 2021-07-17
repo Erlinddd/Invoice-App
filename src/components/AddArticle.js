@@ -5,6 +5,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-solid-svg-icons';
 import {withRouter} from 'react-router-dom';
 import MyToast from './myToast'
+import axiosInstance from './axios';
 
 
   class AddArticle extends Component {
@@ -33,6 +34,7 @@ import MyToast from './myToast'
         if(id){
             this.artikulliById(id);   
         }
+        this.updateArticle()
     }
 
     artikulliById=(id)=>{
@@ -53,7 +55,11 @@ import MyToast from './myToast'
        
         event.preventDefault()
         
-        axios.post("https://localhost:44362/api/artikulli", this.state,{ crossDomain: true })
+        axios.post("https://localhost:44362/api/artikulli", this.state,{ 
+            headers:{
+                authorization:"Bearer " + localStorage.getItem("token")
+              }
+        })
       .then(response => {
        if(response.data != null){
         console.log(response.data)
@@ -73,9 +79,14 @@ import MyToast from './myToast'
     
     }
 
-    updateArticle(event){
-        event.preventDefault()
-        axios.put(`https://localhost:44362/api/artikulli/${this.state.id}`, this.state)
+
+    async updateArticle(){
+      
+      await  axiosInstance.put(`/artikulli/${this.state.id}`, this.state,{
+            headers:{
+                authorization:"Bearer " + localStorage.getItem("token")
+              }
+        })
       .then(response => {
        if(response.data != null){
         console.log(response.data)
@@ -101,7 +112,7 @@ import MyToast from './myToast'
     }
 
 artikulliChange = event => { 
-    if (event.target.name == "emri") {
+    if (event.target.name === "emri") {
         this.setState({ [event.target.name]: event.target.value })
     }
     else {

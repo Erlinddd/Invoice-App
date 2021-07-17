@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import {withRouter} from 'react-router-dom';
 import MyToast from './myToast'
+import {motion} from 'framer-motion'
+
 
 
 toast.configure();
@@ -70,7 +72,7 @@ onEdit = (id, sasia) => {
 
 var stateCopy = [...this.state.selectedItems];
 //var stateCopy = this.state.selectedItems;
-var obj = stateCopy.find(x=>x.value == id);
+var obj = stateCopy.find(x=>x.value === id);
 obj.sasia = sasia;
 obj.vlera = sasia * obj.cmimi;
 
@@ -96,9 +98,15 @@ console.log("produkti i ndryshuar",this.state.selectedItems);
 //     });
 //  }
 
+
+
 async getArtikujt(e){
 
-const res = await axios.get(`https://localhost:44362/api/artikulli`)
+const res = await axios.get(`https://localhost:44362/api/artikulli`,{
+  headers:{
+    authorization:"Bearer " + localStorage.getItem("token")
+  }
+})
 const data = res.data
 const options = data.map(d => ({
 "value" : d.id,
@@ -137,19 +145,19 @@ submitData = ()=> {
   let selectedConsumer=this.state.selectedConsumer;
   let data=this.state.data;
 
-  if(selectedItems== "" && selectedConsumer == "" && data ==""){
+  if(selectedItems=== "" && selectedConsumer === "" && data ===""){
     alert("Your invoice is empty please fill the form...")
     return;
   }
-  else if(selectedItems=="")
+  else if(selectedItems==="")
   {
     alert("Your must choose the article")
     return;
   }
-  else if (selectedConsumer==""){
+  else if (selectedConsumer===""){
     alert("You must choose the consumer")
     return;
-  } else if (data==""){
+  } else if (data===""){
     alert("You must choose date")
     return;
   }
@@ -209,23 +217,34 @@ render() {
 const {items,selectedItems,consumer,selectedConsumer,data}=this.state;
 return ( 
 
-  <div>
+  <motion.div
+  // initial={{oppacity:0}}
+  // animate={{oppacity:1}}
+  // transition={{delay:1.5,duration:1.5}}
+  initial={{x:'-100vh'}}
+  animate={{x:0}}
+  transition={{type:'spring',stiffness:120}}
+  >
       
     
-<div class="container h-120">
+{/* <div class="container h-120">
 <div class="align-items-center h-100">
-  <div class="col-12 mx-auto">
+
+  <div class="col-12 mx-auto"> */}
+<div>
+
+
 
   <div style={{"display":this.state.show ? "block" : "none"}}>
     
-<MyToast show = {this.state.show} message={ "Fatura u regjistrua me sukses"} type = {"success"}/>
- </div>
+    <MyToast show = {this.state.show} message={ "Fatura u regjistrua me sukses"}   type = {"success"}/>
+     </div>
+ 
   <Alert variant="success">
  
-
   <Alert.Heading>
     <h6> Create an Invoice  </h6>        
-    <h6 style={{marginLeft:"650px"}} >Select the Date : <DatePicker selected={this.state.data} onChange={this.onChange}  value={data} placeholder="Select Date" /></h6>
+    <h6 style={{marginLeft:"650px"}} >Select the Date:<DatePicker selected={this.state.data} onChange={this.onChange}  value={data} placeholder="Select Date" /></h6>
     </Alert.Heading>
   
     <hr/>
@@ -264,7 +283,7 @@ return (
 <td>{item.value}</td>
 <td>{item.label}</td>
 <td><input id={item.value} type="text"  class="form-control" value={item.sasia} onChange={(event) => { 
-  if (event.target.value == "") event.target.value = 0; this.onEdit(parseInt(event.target.id), parseFloat(event.target.value))} }></input></td>
+  if (event.target.value === "") event.target.value = 0; this.onEdit(parseInt(event.target.id), parseFloat(event.target.value))} }></input></td>
 <td>{item.cmimi}</td>
 <td id="total">{item.sasia * item.cmimi } </td>
 
@@ -289,12 +308,14 @@ Submit
 
 
   
-</div>
+{/* </div>
 </div>
 
 
+</div> */}
 </div>
-</div>
+</motion.div>
+
 )
 }
 }

@@ -8,7 +8,7 @@ export default class MyToast extends Component {
             top: '10px',
             right: '10px',
             zIndex:'1',
-            boxShadow: '0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)'
+            boxShadow: '0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 4px 18px 0 rgba(0, 0, 0, 0.19)'
         };
 
         return (

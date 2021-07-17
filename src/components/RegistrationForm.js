@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import {withRouter,useHistory,useParams} from 'react-router-dom';
 import {Button,Form} from "react-bootstrap";
+import {motion} from 'framer-motion'
 import { ToastContainer, toast } from 'react-toastify';
-
 import "./Login.css";
 import axios from "axios";
 import MyToast from './myToast'
+import axiosInstance from './axios'
 
 toast.configure();
 
@@ -14,97 +15,112 @@ const changeColor={
     color:"white"
       };
 
-
+function RegistrationForm(props) {
  
+  const [UserName,setUserName]=useState("")
+  const [FirstName,setFirstName]=useState("")
+  const [LastName,setLastName]=useState("")
+  const [Password,setPassword]=useState("")
+  const history=useHistory();
 
- function RegistrationForm(props) {
- 
-  const [data, setData] = useState({Email:'',userName:'',lastName:'',password:''});
   const[show,setShow]=useState(false)
-const apiUrl="https://jsonplaceholder.typicode.com/users"
-  const Registration=(e)=>{
+
+
+   async function  Registration(e){
     e.preventDefault()
-    if (data.Email == "" && data.userName== "" && data.lastName =="" && data.password ==""){
+    if (UserName=== "" && FirstName=== "" && LastName ==="" && Password ===""){
       alert ("Fill the form ")
       return;
     }
-    else if(data.Email=="")
+    else if(UserName==="")
   {
     alert("Your must fill the email form")
     return;
   }
-  else if (data.userName==""){
+  else if (FirstName===""){
     alert("You must fill the username ")
     return;
-  } else if (data.lastName==""){
+  } else if (LastName===""){
     alert("You must fill the lastname")
     return;
   }
-  else if (data.password==""){
+  else if (Password===""){
 alert("fill the pass");
 return ;
   }
+  // let item={UserName,FirstName,LastName,Password}
+  
+  // let result = await fetch ("https://localhost:44362/api/login/register",{
+  //   method:'POST',
+  //   body:JSON.stringify(item),
+  //   headers:{
+  //     "Content-Type":'application/json',
+  //     "Accept":'application/json'
+  //   }
+
+  // })
+  
 
   
-    const data1={Email:data.Email,userName:data.userName,lastName:data.lastName,password:data.password}
-    axios.post(apiUrl,data1)
+  // result=await result.json()
+  // history.push("/")  
+  
+         
+    const data1={UserName,FirstName,LastName,Password}
+    axiosInstance.post("/login/register",data1)
     .then ((result)=>{
-      console.log(result.data);
-      const serializedState = JSON.stringify(result.data);  
-      var a= localStorage.setItem('myDataForReg', serializedState); 
-      if (result.data.Status == 'Invalid')
+      console.log(result);
+      localStorage.setItem('myDataForReg',UserName);
+      if (result.data.Status === '422')
       alert('Invalid User')
       else
+      alert("Regjistrimi u kry me sukses!")
       setShow({"show":true})
     
            setTimeout(() => setShow({"show":false}), 3000);
-           setTimeout(() => loginList(),2000) 
-      //props.history.push('/')
+           setTimeout(() => loginList(),500) 
+  
     })
   }
+
 const loginList=()=>{
   props.history.push('/')
 }
   function validateForm() {    
-    return data.Email.length > 0 && data.password.length > 0;
+    return UserName.length > 0 && Password.length > 0;
   }
 
-const onChange=(e)=>{
-  e.persist()
-  //debugger;
-  setData({...data,[e.target.name]:e.target.value})
-} 
 
   return (
 
-    <div className="Login">
-       <div style={{"display":show ? "block" : "none"}}>
-    
-    <MyToast show = {show} message={  "Regjistrimi u kry me sukses"} type = {"success"}/>
-     </div>
+    <motion.div className="Login"
+    initial={{x:'-100vh'}}
+    transition={{type:'spring',stiffness:120}}
+  animate={{x:0}}>
+      
      
      <div className="text-center" style={changeColor}>  
                   <h1 className="h4 text-gray-900 mb-4">Create a New User</h1>  
                 </div> 
       <Form onSubmit={Registration}>
         <Form.Group size="lg" controlId="email">
-          <Form.Label style={changeColor} >Email</Form.Label>
+          <Form.Label style={changeColor} >Username</Form.Label>
           <Form.Control
             autoFocus
             name="Email"
             type="email"
-            value={data.Email}
-            onChange={onChange}
+            value={UserName}
+            onChange={(e)=>setUserName(e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlId="email">
-          <Form.Label style={changeColor} >Username</Form.Label>
+          <Form.Label style={changeColor} >FirstName</Form.Label>
           <Form.Control
             autoFocus
-            name="userName"
-            type="username"
-            value={data.userName}
-            onChange={onChange}
+            name="FirstName"
+            type="FirstName"
+            value={FirstName}
+            onChange={(e)=>setFirstName(e.target.value)}
           />
         </Form.Group>
         <Form.Group size="lg" controlId="email">
@@ -113,8 +129,8 @@ const onChange=(e)=>{
             autoFocus
             type="lastName"
             name="lastName"
-            value={data.lastName}
-            onChange={onChange}
+            value={LastName}
+            onChange={(e)=>setLastName(e.target.value)}
           />
 
         </Form.Group>
@@ -123,8 +139,8 @@ const onChange=(e)=>{
           <Form.Control
             type="password"
             name="password"
-            value={data.password}
-            onChange={onChange}
+            value={Password}
+            onChange={(e)=>setPassword(e.target.value)}
           />
         </Form.Group>
         <Button block size="lg" type="submit" onClick={()=>{
@@ -141,7 +157,7 @@ const onChange=(e)=>{
                 </p>
       </Form>
       
-    </div>
+    </motion.div>
   );
 }
 export default withRouter(RegistrationForm)

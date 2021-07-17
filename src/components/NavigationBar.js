@@ -1,22 +1,33 @@
 import React, { Component } from 'react'
-import {Navbar,Nav} from 'react-bootstrap'
+import {Navbar,Nav,Button} from 'react-bootstrap'
 // import Logo from '../logo123.png'
-
+import {withRouter} from 'react-router-dom';
 import {Link} from 'react-router-dom'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
-import {faPlus, faList, faPlusCircle,} from '@fortawesome/free-solid-svg-icons';
- 
-
+import {faPlus, faList, faSignOut,} from '@fortawesome/free-solid-svg-icons';
+import {motion}  from 'framer-motion'
 class NavigationBar extends Component {
+    constructor(props){
+        super(props) 
+        this.artikulliList=this.artikulliList.bind(this);
+    }
+    artikulliList = (props) => {
+        localStorage.clear()
+        return this.props.history.push(`/`)};
     render() {
+     
         return (
-            <div>
+            <motion.div 
+            initial={{y:-250}}
+            animate={{y:-7}}
+            transition={{type:'spring',stiffness:100}}>
                  <Navbar bg="dark" variant="dark"  >
                      <Link to="/Welcome" className="navbar-brand">
 
                      FaturaApp
                      </Link>
-                
+                  
+               
                  <Nav className="mr-auto">
      
                  {/* <Link to="/add" className="nav-link" > <FontAwesomeIcon icon={faPlusCircle} size="lg"  /> {'  '} Artikuj</Link>
@@ -28,13 +39,17 @@ class NavigationBar extends Component {
             
              
                       </Nav>
-            
+                  
+                      <Button  variant="info" >Hello  {localStorage.getItem("user")}</Button> 
+                     
+                      <Button  variant="secondary" style={{marginLeft:"10px"}}  onClick={this.artikulliList}> Log Out</Button>
+
                  </Navbar>
              
                 
-            </div>
+            </motion.div>
         )
     }
 }
 
-export default NavigationBar
+export default withRouter( NavigationBar)

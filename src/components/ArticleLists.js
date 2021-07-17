@@ -6,7 +6,15 @@ import MyToast from './myToast'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faTrash,faPlus } from '@fortawesome/free-solid-svg-icons';
 import AddArticle from './AddArticle'
+import axiosInstance from './axios'
 
+// const authAxios=axios.create({
+//     baseURL:"https://localhost:44362/api/artikulli",
+//     headers:{
+//         Authorization:'Bearer' + localStorage.getItem("token"),
+//     }
+// })
+ let token =localStorage.getItem("token");
 
 export class ArticleLists extends Component {
     constructor(props) {
@@ -19,24 +27,38 @@ export class ArticleLists extends Component {
              vlera:'',
         } 
     }
-    
+   
 UpdateArtikulli(id){
     console.log(id)
     this.props.history.push('/edit'+id)
 }
     
     componentDidMount() {
+        this.getArtikujt()
+    }
     
-        axios.get("https://localhost:44362/api/artikulli")
+    async getArtikujt(e){
+      await axiosInstance.get("/artikulli",{
+            headers:{
+                authorization:"Bearer " + localStorage.getItem("token")
+              }
+        })
         .then(response=>response.data)
         .then((data)=>{
             this.setState({artikulli:data})
          
         })
     }
+    
+       
+    
 
     deleteArtikulli=(artikulliID)=>{
-        axios.delete("https://localhost:44362/api/artikulli/"+artikulliID)
+        axios.delete("https://localhost:44362/api/artikulli/"+artikulliID,{
+            headers:{
+                authorization:"Bearer " + localStorage.getItem("token")
+              }
+        })
         
         .then(res => {
         if(res.data!=null){
