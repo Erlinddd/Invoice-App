@@ -16,6 +16,7 @@ import axiosInstance from './axios'
 // })
  let token =localStorage.getItem("token");
 
+
 export class ArticleLists extends Component {
     constructor(props) {
         super(props)
@@ -27,6 +28,7 @@ export class ArticleLists extends Component {
              vlera:'',
         } 
     }
+  
    
 UpdateArtikulli(id){
     console.log(id)
@@ -35,14 +37,11 @@ UpdateArtikulli(id){
     
     componentDidMount() {
         this.getArtikujt()
+     
     }
     
     async getArtikujt(e){
-      await axiosInstance.get("/artikulli",{
-            headers:{
-                authorization:"Bearer " + localStorage.getItem("token")
-              }
-        })
+      await axiosInstance.get("/artikulli")
         .then(response=>response.data)
         .then((data)=>{
             this.setState({artikulli:data})
@@ -54,11 +53,7 @@ UpdateArtikulli(id){
     
 
     deleteArtikulli=(artikulliID)=>{
-        axios.delete("https://localhost:44362/api/artikulli/"+artikulliID,{
-            headers:{
-                authorization:"Bearer " + localStorage.getItem("token")
-              }
-        })
+        axiosInstance.delete("/artikulli/"+artikulliID)
         
         .then(res => {
         if(res.data!=null){
@@ -85,9 +80,10 @@ UpdateArtikulli(id){
              </div>
               <Card className={"border border-dark bg-dark text-white"}>
                <Card.Header>
-                  <Button  variant="secondary" size="lg" block  onClick={()=>this.addarticle()} >  <FontAwesomeIcon icon={faPlus} /> Add Article</Button>
+                  <Button  variant="secondary" size="lg" block  onClick={()=>this.addarticle()} >  <FontAwesomeIcon icon={faPlus} />  Add Article</Button>
                </Card.Header>
-               <Card.Body>               
+               <Card.Body>           
+              Number of article: {this.state.artikulli.length}    
         <Table bordered hover striped variant="dark">
             
            <thead>

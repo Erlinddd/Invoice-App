@@ -34,7 +34,8 @@ class NavigationBar extends Component {
                  <Link to="/bleresi" className="nav-link" > <FontAwesomeIcon icon={faPlusCircle}  size="lg" /> {'  '} Bleres</Link> */}
 
                   <Link to="/lists" className="nav-link" > <FontAwesomeIcon icon={faList} size="lg"  /> {'  ' } Lists of Article</Link>                  
-                  <Link to="/lista/bleresi" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Lista of Consumer</Link>
+                  <Link to="/lista/bleresi" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Lists of Costumer</Link>
+                  <Link to="/faturat" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Lists of reports</Link>
 
             
              

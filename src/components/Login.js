@@ -6,6 +6,7 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify';
 import {motion} from 'framer-motion';
+import axiosInstance from './axios'
 
 
 toast.configure();
@@ -23,31 +24,36 @@ const changeColor={
   const [loading,setLoading]=useState(false);
   const[show,setShow]=useState(false)
 
-    const  apiUrl="https://localhost:44362/api/login/authenticate";
+    const  apiUrl="/login/authenticate";
 
   function validateForm() {
      return UserName.length > 0 && Password.length > 0;
    }
-   
-
   const loginUser=(e)=>{
     e.preventDefault()
+
     let item={UserName,Password};
     
-    axios.post(apiUrl,item).then(response=>{
+    axiosInstance.post(apiUrl,item,{
+      headers:{
+        "Access-Control-Allow-Headers" : "Content-Type",
+        "Access-Control-Allow-Origin": "https://localhost:44362",
+        "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
+      }
+    }).then(response=>{
       setLoading(false);
       alert("Log In Success")
       localStorage.setItem("user",UserName)
       setShow({"show":true})
     
            setTimeout(() => setShow({"show":false}), 3000);
-           setTimeout(() => loginList(),1000) 
+           setTimeout(() => loginList()) 
 
    localStorage.setItem("token",response.data)
  
     }).catch (error=>{
       setLoading(false);
-     
+      localStorage.setItem("token","");
       if (error.response.status=== 401 || error.response.status===400)
       {
         alert("Username or Password are incorrect!")
@@ -96,7 +102,7 @@ const changeColor={
         </Button>
 <br/>
         <p className="forgot-password text-right text-color-white" style={changeColor}>
-                    You dont have account ? <a href="/Registration">Sign Up</a>
+                    You don't have account ? <a href="/Registration">Sign Up</a>
                 </p>
       </Form>
       

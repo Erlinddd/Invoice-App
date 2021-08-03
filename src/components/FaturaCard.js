@@ -1,13 +1,15 @@
 import React,{useState,useEffect,useContext} from 'react'
 import {Card,Form,Table,Button,ButtonGroup} from 'react-bootstrap'
 import axios from 'axios'
+import moment from 'moment'
 
 const FaturaCard = (props)  =>{
  
 
-const [fat,setFat]=useState({"id":0,"data":"","idBleresi":0,"faturaArtikullis":[]})
+const [fat,setFat]=useState({"id":0,"data":"","idBleresi":0,"faturaArtikullis":[],"bleresi":""})
 useEffect(()=>{
   var faturaEselektuar=JSON.parse(localStorage.getItem("FaturaEselektuar"))
+  console.log(fat)
   setFat(faturaEselektuar)
   // alert(faturaEselektuar.id)  
 },[])
@@ -19,11 +21,16 @@ window.print();
         
         <div>
           
+          
+          
   
             <Card className="text-center">
+            <Card.Header>Fatura u krijua nga:<Form.Label style={{marginLeft:"2px"}}>  
+              {localStorage.getItem("user")} </Form.Label> </Card.Header>
   <Card.Header>FaturaId:<Form.Label>{fat.id} </Form.Label> </Card.Header>
-  <Card.Header>BleresId:<Form.Label>{fat.idBleresi} </Form.Label> </Card.Header>
-  <Card.Header>Data:<Form.Label>{fat.data} </Form.Label>
+
+  <Card.Header>Bleresi:<Form.Label>{fat.bleresi.firstName} </Form.Label> </Card.Header>
+  <Card.Header>Data:<Form.Label>{moment(fat.data).format("YYYY-MM-DD hh:mm")} </Form.Label>
    </Card.Header>
    
 
@@ -32,13 +39,10 @@ window.print();
       
       </Card.Title>
     <Card.Text>
-     
-    
      <p id="demo"></p>
-
     </Card.Text>
     <Table bordered hover striped variant="white">
-       <thead>
+<thead>
 <tr>
   <th>Artikulli</th>
   <th>Sasia</th>

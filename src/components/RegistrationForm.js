@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import {withRouter,useHistory,useParams} from 'react-router-dom';
+import React, { useState } from "react";
+import {withRouter,useHistory} from 'react-router-dom';
 import {Button,Form} from "react-bootstrap";
 import {motion} from 'framer-motion'
 import { ToastContainer, toast } from 'react-toastify';
@@ -21,6 +21,7 @@ function RegistrationForm(props) {
   const [FirstName,setFirstName]=useState("")
   const [LastName,setLastName]=useState("")
   const [Password,setPassword]=useState("")
+  const[loading,setLoading]=useState(false);
   const history=useHistory();
 
   const[show,setShow]=useState(false)
@@ -48,38 +49,29 @@ function RegistrationForm(props) {
 alert("fill the pass");
 return ;
   }
-  // let item={UserName,FirstName,LastName,Password}
   
-  // let result = await fetch ("https://localhost:44362/api/login/register",{
-  //   method:'POST',
-  //   body:JSON.stringify(item),
-  //   headers:{
-  //     "Content-Type":'application/json',
-  //     "Accept":'application/json'
-  //   }
-
-  // })
-  
-
-  
-  // result=await result.json()
-  // history.push("/")  
   
          
     const data1={UserName,FirstName,LastName,Password}
     axiosInstance.post("/login/register",data1)
     .then ((result)=>{
+      setLoading(false)
       console.log(result);
-      localStorage.setItem('myDataForReg',UserName);
-      if (result.data.Status === '422')
-      alert('Invalid User')
-      else
       alert("Regjistrimi u kry me sukses!")
+
       setShow({"show":true})
     
            setTimeout(() => setShow({"show":false}), 3000);
            setTimeout(() => loginList(),500) 
   
+    }).catch (error=>{
+      setLoading(true);
+      localStorage.setItem("token","");
+      if (error.response.status=== 500)
+      {
+        alert("User alredy exist!")
+      }
+      
     })
   }
 

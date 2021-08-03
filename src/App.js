@@ -1,12 +1,10 @@
-import React,{useState} from 'react'
-
+import React,{useState,useEffect} from 'react'
 import NavigationBar from './components/NavigationBar';
 import Welcome from './components/Welcome';
 import {Container,Row,Col} from 'react-bootstrap'
-import Footer from './components/Footer'
 import AddArticle from './components/AddArticle';
 import ArticleLists from './components/ArticleLists';
-import {BrowserRouter as Router,Switch,Route,Redirect,location,useLocation} from 'react-router-dom'
+import {BrowserRouter as Router,Switch,Route} from 'react-router-dom'
 import UserList from './components/UserList';
 import AddConsumer from './components/AddConsumer';
 import EditConsumer from './components/EditConsumer';
@@ -14,109 +12,77 @@ import Faturat from './components/Faturat';
 import FaturaCard from './components/FaturaCard';
 import Login from './components/Login';
 import RegistrationForm from './components/RegistrationForm';
-import ArticleListDDL  from './components/ArticleListDDL';
 import NotFound from './components/NotFound';
-import ThemeContextProvider from './context/ThemeContextProvider';
+import Searchdata from './components/Searchdata';
+import  PrivateRoutes  from './components/PrivateRoutes';
+ 
 
 const App=({props})=> {
-  
-  
-  const marginTop={
+const [loading,setLoading]=useState(true);
+useEffect(() => {
+  setTimeout(() => {
+    setLoading(false);
+  }, 2500);
+})
+
+const marginTop={
 marginTop:"20px"
-
-  };
+};
 const nav={
- marginBottom:"30px"
+marginBottom:"30px"
 }
+return (
 
- return (
+<Router >
 
+  <Container>
+    <Row>
+      <Col lg={12} style={marginTop}>
+        <Switch>
+        <Route  exact path="/" component={Login} >
+          <Login/>
+        </Route>
+        <Route path="/Registration">
+    <RegistrationForm/>
+  </Route>
+  
+  <div style={nav}>
+    
+      <NavigationBar/>
+      <br/>
+      <br/>
+      <br/>
+      
+    
+<PrivateRoutes   path="/bleresi" component={props=><AddConsumer {...props}/>}/>   
+<PrivateRoutes  path="/faturaCard/:id" component={props=><FaturaCard {...props}/>}/>   
+<PrivateRoutes  path="/add" component={props=><AddArticle {...props}/>}/>   
+<PrivateRoutes  path="/lists" component={ArticleLists}  component={props=><ArticleLists {...props}/>}/> 
+<PrivateRoutes   path="/edit/:id" component={props=><AddArticle {...props}/>}/>
+<PrivateRoutes   exact path="/Welcome"  component={props => <Welcome {...props}/>}  />
+<PrivateRoutes    path="/lista/bleresi" component={props=><UserList {...props}/>}  />
+<PrivateRoutes   path="/editt/bleresi/:id"  component={props=><EditConsumer {...props}/>}  />
+<PrivateRoutes  path="/faturat"   component={props=><Searchdata {...props}/>}  /> 
+
+
+  </div>
   
 
-    <Router >
+  <Route  component={NotFound}>
+    
+    </Route> 
+        </Switch>
   
-          <Container>
-            <Row>
-              <Col lg={12} style={marginTop}>
-               <Switch>
-              
-             
-
-               <Route  exact path="/" component={Login} >
-                 <Login/>
-               </Route>
-            
-
-         
-
-               <Route path="/Registration">
-            <RegistrationForm/>
-          </Route>
-          
-          <div style={nav}>
-           
-
-        
-        
-              <NavigationBar/>
-      
-         
-              <br/>
-              <br/>
-              <br/>
-          <Route path="/bleresi">
-            <AddConsumer />
-          </Route>
-        
-          <Route path="/faturaCard/:id">
-            <FaturaCard />
-          </Route>
-         
+      </Col>
+    </Row>
     
-          <Route path="/add">
-            <AddArticle />
-          </Route>   
-          <Route path="/lists" component={ArticleLists}>
-         
-          </Route>
-          <Route  path="/edit/:id">
-            <AddArticle />
-          </Route>
-          <Route   path="/Welcome">
-            <Welcome />
-         
-          </Route>
+
+  </Container>
 
 
-         
-          <Route   path="/faturat">
-            <Faturat />
-          </Route>
+</Router>
 
-          <Route   path="/lista/bleresi">
-            <UserList />
-          </Route>
-          <Route  path="/editt/bleresi/:id">
-            <EditConsumer />
-          </Route>
-         
-       
-          
-          </div>
-   
-          <Route  component={NotFound} /> 
-               </Switch>
-          
-              </Col>
-            </Row>
-           
-      
-          </Container>
-        
-
-    </Router>
-    
-  );
+);
 }
 
 export default App;

@@ -6,7 +6,7 @@ import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-so
 import {withRouter,useHistory,useParams} from 'react-router-dom';
 import MyToast from './myToast'
 import {useState,useEffect} from 'react'
-
+import axiosInstance from './axios'
 
 const EditConsumer = (props) => {
     const [consumer, setConsumer] = useState({ id:'',firstName: '', lastName: '', street: '', city: '', postalCode: '', contact: '' });  
@@ -19,7 +19,7 @@ const EditConsumer = (props) => {
             e.preventDefault();  
             
             const data = {id:consumer.id,firstName:consumer.firstName, lastName: consumer.lastName, street: consumer.street, city:consumer.city, postalCode: consumer.postalCode, contact: consumer.contact };  
-            axios.put(`https://localhost:44362/api/bleresi/${id}`,data)  
+            axiosInstance.put(`/bleresi/${id}`,data)  
               .then((result) => {  
                 props.history.push('/lista/bleresi')
                 console.log(result)
@@ -44,7 +44,7 @@ const EditConsumer = (props) => {
  
     const loadConsumer=async()=>{
         debugger;
-        const result=await axios.get(`https://localhost:44362/api/bleresi/${id}`)
+        const result=await axiosInstance.get(`/bleresi/${id}`)
         console.log(result)
     setConsumer(result.data)
     }

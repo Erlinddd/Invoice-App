@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card,Table,Button,ButtonGroup } from 'react-bootstrap'
+import { Card,Table,Button,ButtonGroup,ReactBootStrapSpinner,Spinner } from 'react-bootstrap'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import MyToast from './myToast'
@@ -9,31 +9,32 @@ import { useState, useEffect } from 'react'
 import {withRouter,useHistory,useParams} from 'react-router-dom';
 import {toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import * as ReactBootStrap from 'react-bootstrap'
 
+
+import axiosInstance from './axios'
 
 toast.configure();
 
 const UserList = (props) => {
     const [data, setData] = useState([]);
-   
+       const [loading,setLoading]=useState(false);   
     
     useEffect(() => {          
             const GetData = async () => {  
-              const result = await axios.get('https://localhost:44362/api/bleresi');  
+              const result = await axiosInstance.get('/bleresi');  
+              debugger;
               setData(result.data); 
               console.log(result.data)
             };  
             GetData(); 
+            setLoading(true)
         },[])
 
        
 
         const deleteConsumer = (id) => {  
-              axios.delete('https://localhost:44362/api/bleresi/' + id,{
-                headers:{
-                  "Authorization":'Bearer'+localStorage.getItem("token")
-                }
-              })  
+          axiosInstance.delete('/bleresi/' + id,)  
                 .then((result) => {  
                alert("Deleted succesfully") 
                props.history.push('/bleresi')
@@ -46,7 +47,8 @@ const UserList = (props) => {
          
           
     return (
-        <div className="App">
+        <div>
+  
           <Card className={"border border-dark bg-dark text-white"}>
            <Card.Header>  
                <Button   variant="secondary" size="lg" block onClick={Click}> <FontAwesomeIcon icon={faPlus} /> Add Consumer</Button>
@@ -68,7 +70,8 @@ const UserList = (props) => {
 
 
 <tbody>
-{data.map(item => {  
+
+{ loading ? data.map(item => {  
  return <tr key={item.id}>  
  <td>{item.firstName}</td>  
  <td>{item.lastName}</td>  
@@ -77,6 +80,7 @@ const UserList = (props) => {
   <td>{item.postalCode}</td>  
   <td>{item.contact}</td>   
 <td>  
+
 <ButtonGroup>
     <Link className="btn btn-lg btn-outline-primary" to={`/editt/bleresi/${item.id}`}><FontAwesomeIcon icon={faEdit} /></Link>{' '}
  
@@ -84,7 +88,7 @@ const UserList = (props) => {
   </ButtonGroup>
  </td>  
 </tr>  
- })}  
+ }) : <Spinner animation="border" />}  
 
 
 </tbody>
