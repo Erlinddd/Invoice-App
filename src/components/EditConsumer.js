@@ -15,6 +15,7 @@ const EditConsumer = (props) => {
     let history = useHistory();
     const { id } = useParams();
     
+    
     const UpdateConsumer = (e) => {  
             e.preventDefault();  
             

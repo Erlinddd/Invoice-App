@@ -15,6 +15,8 @@ import RegistrationForm from './components/RegistrationForm';
 import NotFound from './components/NotFound';
 import Searchdata from './components/Searchdata';
 import  PrivateRoutes  from './components/PrivateRoutes';
+
+import DynamicChart from './components/chart';
  
 
 const App=({props})=> {
@@ -32,9 +34,7 @@ const nav={
 marginBottom:"30px"
 }
 return (
-
 <Router >
-
   <Container>
     <Row>
       <Col lg={12} style={marginTop}>
@@ -45,15 +45,12 @@ return (
         <Route path="/Registration">
     <RegistrationForm/>
   </Route>
-  
   <div style={nav}>
-    
       <NavigationBar/>
       <br/>
       <br/>
       <br/>
       
-    
 <PrivateRoutes   path="/bleresi" component={props=><AddConsumer {...props}/>}/>   
 <PrivateRoutes  path="/faturaCard/:id" component={props=><FaturaCard {...props}/>}/>   
 <PrivateRoutes  path="/add" component={props=><AddArticle {...props}/>}/>   
@@ -63,10 +60,9 @@ return (
 <PrivateRoutes    path="/lista/bleresi" component={props=><UserList {...props}/>}  />
 <PrivateRoutes   path="/editt/bleresi/:id"  component={props=><EditConsumer {...props}/>}  />
 <PrivateRoutes  path="/faturat"   component={props=><Searchdata {...props}/>}  /> 
-
+{/* <Route path="/charts" component={DynamicChart}/> */}
 
   </div>
-  
 
   <Route  component={NotFound}>
     

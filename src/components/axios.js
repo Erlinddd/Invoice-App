@@ -11,12 +11,13 @@ const axiosInstance=axios.create({
   
 });
 
-  // Set the AUTH token for any request
+
   axiosInstance.interceptors.request.use(function (config) {
       
     const token = localStorage.getItem('token');
     config.headers.Authorization =  token ? `Bearer ${token}` : '';
     return config;
+    
     
   });
 console.log('axiosCreate')

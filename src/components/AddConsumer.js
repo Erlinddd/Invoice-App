@@ -9,12 +9,12 @@ import {useState,useEffect} from 'react'
 import axiosInstance from './axios'
 
 const AddConsumer = (props) => {
-    const [consumer, setConsumer] = useState({ FirstName: '', LastName: '', Street: '', City: '', PostalCode: '', Contact: '' });  
+    const [consumer, setConsumer] = useState({ FirstName: '', LastName: '', Street: '', City: '', PostalCode: '', Contact: '',RajoniId:'' });  
 
     const InsertConsumer = (e) => {  
             e.preventDefault();  
             debugger;  
-            const data = { FirstName:consumer.FirstName, LastName: consumer.LastName, Street: consumer.Street, City:consumer.City, PostalCode: consumer.PostalCode, Contact: consumer.Contact };  
+            const data = { FirstName:consumer.FirstName, LastName: consumer.LastName, Street: consumer.Street, City:consumer.City, PostalCode: consumer.PostalCode, Contact: consumer.Contact,RajoniId:consumer.RajoniId };  
             axiosInstance.post("/bleresi", data)  
               .then((result) => {  
                 props.history.push('/lista/bleresi')
@@ -23,10 +23,18 @@ const AddConsumer = (props) => {
           };  
 
           const onChange = (e) => {  
+            debugger;
                 e.persist();  
               
                 setConsumer({...consumer,[e.target.name]: e.target.value});  
-              }  
+              }
+              
+             const  rajoniOnChange=(e)=>{
+               debugger;
+                setConsumer({...consumer,RajoniId:e.target.value})
+              }
+              
+
               let history = useHistory();
 
 	function handleClick() {
@@ -87,6 +95,16 @@ const AddConsumer = (props) => {
   placeholder="Contact" />
   </Form.Group>
   </Form.Row>
+  <div className=" bg-dark">
+      <label className="mr-sm-8" for="inlineFormCustomSelect">Rajoni</label>
+      <select className=" bg-dark text-white  custom-select mr-sm-8" id="inlineFormCustomSelect"  onChange={ rajoniOnChange }  >
+      <option value="0">Select the rajon</option>
+      <option value="1">Tetove</option>
+        <option value="2">Struge</option>
+        <option value="3">Shkup</option>
+        
+      </select>
+    </div>
 
 </Card.Body>
 <Card.Footer style={{textAlign:"center"}}>

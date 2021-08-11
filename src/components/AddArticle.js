@@ -5,6 +5,8 @@ import {faSave, faPlusSquare, faUndo, faList, faEdit} from '@fortawesome/free-so
 import {withRouter} from 'react-router-dom';
 import MyToast from './myToast'
 import axiosInstance from './axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const labelCss={
    
@@ -33,6 +35,7 @@ const labelCss={
             id:0,
             emri:'',
             cmimi:'',
+            njesia:'',
             sasia:'',
             vlera:'',
            
@@ -63,9 +66,12 @@ const labelCss={
     }}
 
     submitArtikulli(event){
+        
         event.preventDefault()
         axiosInstance.post("/artikulli", this.state)
       .then(response => {
+       
+          
        if(response.data != null){
         console.log(response.data)
 
@@ -76,8 +82,18 @@ const labelCss={
         this.setState({"show":false })
        }
       
-      }).catch ((error)=>{
-        console.error("error:"+error)
+      }).catch (error=>{
+          
+        toast.warn(' Something went wrong,please try again later!', {
+            position: "top-right",
+            autoClose: 5000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            });
+    
     
     });
     }
@@ -125,6 +141,10 @@ artikulliChange = event => {
     }
     
 }
+
+njesiaChange=e=>{
+    this.setState({njesia:e.target.value})
+}
 _changeNum1(e) {
     if (e.target.validity.valid) {
       var newNum1 = +(e.target.value)
@@ -166,13 +186,14 @@ artikulliList = (props) => {return this.props.history.push(`/lists`)};
 <Form.Label>Artikulli</Form.Label>
 <Form.Control autoComplete="off" value={this.state.emri} onChange={this.artikulliChange} required name="emri" className="bg-dark text-white" type="text" placeholder="Article name" />
 </Form.Group>
+
 <div className=" bg-dark">
       <label className="mr-sm-8" for="inlineFormCustomSelect">Njesia</label>
-      <select className=" bg-dark text-white  custom-select mr-sm-8" id="inlineFormCustomSelect">
-        <option selected>Choose</option>
-        <option value="1">Kg</option>
-        <option value="2">Liter</option>
-        <option value="3">Unit</option>
+      <select className=" bg-dark text-white  custom-select mr-sm-8" id="inlineFormCustomSelect"  value={this.state.njesia} onChange={this.njesiaChange}>
+      <option value="Unit">Unit</option>
+        <option value="Kg">Kg</option>
+        <option value="Liter">Liter</option>
+        
       </select>
     </div>
 
@@ -218,7 +239,19 @@ required name="sasia" className="bg-dark text-white" type="Number" placeholder="
        <Button onClick={this.artikulliList.bind()} size="sm" variant="info" type="button">
        <FontAwesomeIcon icon={faList}/> List
        </Button>
-
+       <ToastContainer
+position="top-right"
+autoClose={4000}
+hideProgressBar={false}
+newestOnTop={false}
+closeOnClick
+rtl={false}
+pauseOnFocusLoss
+draggable
+pauseOnHover
+/>
+{/* Same as */}
+<ToastContainer />
     </Card.Footer>
     </Form>
     </Card>

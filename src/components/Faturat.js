@@ -1,5 +1,5 @@
 import React,{useState,useEffect}from 'react'
-
+import axios from 'axios'
 import {Button,ButtonGroup,Fade} from 'react-bootstrap'
 import moment from 'moment'
 import {Link} from 'react-router-dom'
@@ -10,6 +10,8 @@ import axiosInstance from './axios'
 import { enGB } from 'date-fns/locale'
 import { DateRangePicker, START_DATE, END_DATE } from 'react-nice-dates'
 import 'react-nice-dates/build/style.css'
+import Chart from './chart'
+import DynamicChart from './chart'
 
 const marginBottom={
     marginBottom:"20px",
@@ -22,6 +24,8 @@ function Faturat (props)  {
     const [fatura,setFatura]=useState([])
     const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [chart,setChart]=useState({});
+
     
     useEffect(() => {          
         const GetData = async () => {  
@@ -29,10 +33,54 @@ function Faturat (props)  {
           axiosInstance.get(`/fatura`);  
           setData(result.data); 
           console.log(result.data)
+          
         };  
         GetData(); 
         
+        
     },[])
+    const getData = async () => {
+      debugger;
+      try {
+        const res = await axios.get(
+          `https://corona.lmao.ninja/v2/historical/pakistan`
+        );
+  
+        setChart({
+          labels: Object.keys(res.data.timeline.cases),
+          datasets: [
+            {
+              label: "Covid-19",
+              fill: false,
+              lineTension: 0.1,
+              backgroundColor: "rgba(75,192,192,0.4)",
+              borderColor: "rgba(75,192,192,1)",
+              borderCapStyle: "butt",
+              borderDash: [],
+              borderDashOffset: 0.0,
+              borderJoinStyle: "miter",
+              pointBorderColor: "rgba(75,192,192,1)",
+              pointBackgroundColor: "#fff",
+              pointBorderWidth: 1,
+              pointHoverRadius: 5,
+              pointHoverBackgroundColor: "rgba(75,192,192,1)",
+              pointHoverBorderColor: "rgba(220,220,220,1)",
+              pointHoverBorderWidth: 2,
+              pointRadius: 1,
+              pointHitRadius: 10,
+              data: Object.values(res.data.timeline.cases)
+            }
+          ]
+        });
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
+    useEffect=(()=>{
+      getData();
+    })
+
+    
       const getById=async(event)=>{
       let IdFatura = event.currentTarget.id.split('_')[1];
       const response=await 
@@ -131,16 +179,12 @@ axiosInstance.delete('/fatura/' + idFatura)
           </ButtonGroup>
 
           
-      {({theme, toggleTheme}) => (
-        <button
-          onClick={toggleTheme}
-          style={{backgroundColor: theme.background}}>
-          Toggle Theme
-        </button>
-      )}
+     
+
+
+  </div>
+  <div>
     
-
-
   </div>
   
 </div>

@@ -1,7 +1,6 @@
 import React from 'react';
 import { Redirect, Route } from 'react-router-dom';
 
-// Utils
 
 const PrivateRoutes = ({ component: Component, ...rest }) => {  
   

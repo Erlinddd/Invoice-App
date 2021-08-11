@@ -41,7 +41,7 @@ class NavigationBar extends Component {
              
                       </Nav>
                   
-                      <Button  variant="info" >Hello  {localStorage.getItem("user")}</Button> 
+                      <Button  variant="info" >Hello {localStorage.getItem("user")}</Button> 
                      
                       <Button  variant="secondary" style={{marginLeft:"10px"}}  onClick={this.artikulliList}> Log Out</Button>
 

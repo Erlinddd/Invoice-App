@@ -10,6 +10,7 @@ import { faTrash } from '@fortawesome/free-solid-svg-icons';
 import "react-datepicker/dist/react-datepicker.css";    
 import {Link} from 'react-router-dom'
 import { debuggerStatement } from '@babel/types';
+import DynamicChart from './chart';
 
 export class Searchdata extends Component {  
 constructor(props) {  
@@ -19,7 +20,7 @@ this.state = {
 faturadate: [],  
 startdate: '' ,  
 enddate:'',
-fatura:''  
+fatura:'',
 }  
 }  
 Changedate = (e) => {    
@@ -41,6 +42,8 @@ faturadate: response.data
 });  
 });  
 }  
+
+
 
 getById=async(event)=>{
 let IdFatura = event.currentTarget.id.split('_')[1];
@@ -87,13 +90,13 @@ return (
 <div className="row hdr text-white " >  
 <div className="col-sm-3 form-group text-white ">  </div>  
 <div className="col-sm-3 form-group text-white ">  
-<DatePicker className="form-control"    
+<DatePicker className="form-control"    required
         selected={this.state.startdate}  dateFormat="yyyy-MM-dd"    placeholderText="Select Date" showPopperArrow={false}    
         onChange={this.Changedate}    
 />    
 </div>  
 <div className="col-sm-3 form-group">  
-<DatePicker className="form-control"    
+<DatePicker className="form-control"    required
         selected={this.state.enddate}  dateFormat="yyyy-MM-dd"  placeholderText="Select Date" showPopperArrow={false}    
         onChange={this.enddate}    
 />    
@@ -127,14 +130,16 @@ return  <tr key={index}>
     <td  className="text-white" >{ moment(p.data).format("YYYY-MM-DD hh:mm")}</td>  
 <td  className="text-white" ><Link  onClick={this.getById}  id={"btn_"+p.id} className="btn btn-lg btn-outline-primary text-white" >Printo Fakturen</Link>{' '}</td>
 <td><ButtonGroup>
-<Button size="lg"  onClick={() => { this.deleteFatura(p.id) }} className="btn btn-lg btn-outline-danger" style={{marginLeft:"5px"}} >   <FontAwesomeIcon icon={faTrash} /></Button>
+<Button size="lg"  onClick={() => { this.deleteFatura(p.id) }} className="btn btn-lg btn-outline-danger" style={{marginLeft:"5px"}} >  <FontAwesomeIcon icon={faTrash} /></Button>
 </ButtonGroup></td>
 </tr>  
 })   
 }  
+
 </tbody>  
 </table>  
 
+<DynamicChart/>
 </div>  
 )  
 }  
