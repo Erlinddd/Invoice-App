@@ -24,7 +24,7 @@ window.print();
           
           
   
-            <Card className="text-center">
+            <Card text="dark" className="text-center">
             <Card.Header>Fatura u krijua nga:<Form.Label style={{marginLeft:"2px"}}>  
               {localStorage.getItem("user")} </Form.Label> </Card.Header>
   <Card.Header>FaturaId:<Form.Label>{fat.id} </Form.Label> </Card.Header>
@@ -71,7 +71,8 @@ window.print();
                </Table>
   </Card.Body>
   <ButtonGroup>
-<Button onClick={printFatura}>Printo Faturen</Button>
+<Button onClick={printFatura}>Print the Invoice</Button>
+<Button variant="secondary"  href="mailto:someone@example.com">Sent with Email </Button>
 </ButtonGroup>
 </Card> 
 

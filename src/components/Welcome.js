@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {Alert } from 'react-bootstrap'
 import ArticleListDDL from './ArticleListDDL'
-import ContactUs from './email'
+//import ContactUs from './email'
 
 
 

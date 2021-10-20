@@ -1,19 +1,14 @@
 import React, { Component } from 'react'
 import { Card,Table,Button,ButtonGroup } from 'react-bootstrap'
-import axios from 'axios'
+
 import {Link} from 'react-router-dom'
 import MyToast from './myToast'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faEdit, faTrash,faPlus } from '@fortawesome/free-solid-svg-icons';
-import AddArticle from './AddArticle'
+
 import axiosInstance from './axios'
 
-// const authAxios=axios.create({
-//     baseURL:"https://localhost:44362/api/artikulli",
-//     headers:{
-//         Authorization:'Bearer' + localStorage.getItem("token"),
-//     }
-// })
+
  let token =localStorage.getItem("token");
 
 
@@ -37,7 +32,6 @@ UpdateArtikulli(id){
     
     componentDidMount() {
         this.getArtikujt()
-     
     }
     
     async getArtikujt(e){
@@ -75,6 +69,9 @@ UpdateArtikulli(id){
     render() {
         return (
             <div>
+
+          
+            <>
             <div style={{"display":this.state.show ? "block" : "none"}}>
           <MyToast show = {this.state.show} message = {"Artikulli u fshi me sukses."} type = {"danger"}/>
              </div>
@@ -121,6 +118,7 @@ UpdateArtikulli(id){
                    </Table>
                </Card.Body>
            </Card>
+            </>
             </div>
            
         )

@@ -7,6 +7,7 @@ import "./Login.css";
 import axios from "axios";
 import MyToast from './myToast'
 import axiosInstance from './axios'
+import {useForm} from 'react-hook-form';
 
 toast.configure();
 
@@ -57,7 +58,7 @@ return ;
     .then ((result)=>{
       setLoading(false)
       console.log(result);
-      alert("Regjistrimi u kry me sukses!")
+      toast.success("Regjistrimi u kry me sukses!")
 
       setShow({"show":true})
     
@@ -67,9 +68,9 @@ return ;
     }).catch (error=>{
       setLoading(true);
       localStorage.setItem("token","");
-      if (error.response.status=== 500)
+      if (error.response.status === 500)
       {
-        alert("User alredy exist!")
+        toast.warning("User alredy exist!")
       }
       
     })

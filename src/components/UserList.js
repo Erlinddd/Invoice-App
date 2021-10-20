@@ -47,7 +47,7 @@ const UserList = (props) => {
          
           
     return (
-        <div>
+        <div style={{position:"absolut"}}  className="container">
   
           <Card className={"border border-dark bg-dark text-white"}>
            <Card.Header>  
@@ -55,8 +55,8 @@ const UserList = (props) => {
            </Card.Header>
            <Card.Body>     
            <h6>Number of consumer:{data.length}  </h6>         
-    <Table bordered hover striped variant="dark">
-       <thead>
+    <Table responsive style={{position:"absolut"}} bordered hover striped variant="dark">
+       <thead  style={{position:"absolut"}} >
 <tr>
   <th>Firstname</th>
   <th>Lastname</th>
@@ -84,7 +84,7 @@ const UserList = (props) => {
 <ButtonGroup>
     <Link className="btn btn-lg btn-outline-primary" to={`/editt/bleresi/${item.id}`}><FontAwesomeIcon icon={faEdit} /></Link>{' '}
  
-      <Button size="lg" onClick={() => { deleteConsumer(item.id) }}  className="btn btn-lg btn-outline-danger" style={{marginLeft:"5px"}} >   <FontAwesomeIcon icon={faTrash} /></Button>
+      <Button size="lg" onClick={() => { deleteConsumer(item.id) }}  className="btn btn-lg btn-outline-danger" >   <FontAwesomeIcon icon={faTrash} /></Button>
   </ButtonGroup>
  </td>  
 </tr>  

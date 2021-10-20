@@ -7,7 +7,7 @@ import 'react-toastify/dist/ReactToastify.css'
 import { ToastContainer, toast } from 'react-toastify';
 import {motion} from 'framer-motion';
 import axiosInstance from './axios'
-
+import { GoogleLogin, GoogleLogout } from 'react-google-login';
 
 toast.configure();
 const changeColor={
@@ -17,6 +17,7 @@ const changeColor={
   useEffect(()=>{
     toast("Please log in to use  FaturaApp")
   },[])
+  
   const [user,setUser]=useState('')
   const [UserName, setUserName] = useState('');
   const [Password,setPassword]=useState('');
@@ -32,6 +33,8 @@ const changeColor={
   const loginUser=(e)=>{
     e.preventDefault()
 
+
+    
     let item={UserName,Password};
     
     axiosInstance.post(apiUrl,item,{
@@ -42,21 +45,21 @@ const changeColor={
       }
     }).then(response=>{
       setLoading(false);
-      alert("Log In Success")
+      toast.success("Login successfully!!");
       localStorage.setItem("user",UserName)
       setShow({"show":true})
     
            setTimeout(() => setShow({"show":false}), 3000);
-           setTimeout(() => loginList()) 
+           setTimeout(() => loginList(),1000) 
 
    localStorage.setItem("token",response.data)
  
     }).catch (error=>{
       setLoading(false);
       localStorage.setItem("token","");
-      if (error.response.status=== 401 || error.response.status===400)
+      if (error.response.status=== 401 || error.response.status===400  || error.response.status===500)
       {
-        alert("Username or Password are incorrect!")
+       toast.error("Username or Password are incorrect!")
       }
       
     })
@@ -66,16 +69,20 @@ const changeColor={
   const loginList=()=>{
     props.history.push('/Welcome')
   }
-
+ 
   
+
   return (
     <motion.div className="Login"
     initial={{x:'-100vh'}}
     animate={{x:0}}
     transition={{type:'spring',stiffness:120}}
     >
-       <div className="text-center" style={changeColor}>  
-                  <motion.h1 className="h4 text-gray-900 mb-4">Login</motion.h1>  
+       <div  className="text-center" style={changeColor}>  
+    
+  
+
+                  <motion.h1 className="h4 text-gray-900 mb-4" id="my header">Login</motion.h1>  
                 </div> 
       <Form onSubmit={loginUser}>
         <Form.Group size="lg" controlId="email">
@@ -86,6 +93,7 @@ const changeColor={
             name="email"
             value={UserName}
             onChange={e=>setUserName(e.target.value)}
+            required
           />
         </Form.Group>
         <Form.Group size="lg" controlId="password">
@@ -94,10 +102,11 @@ const changeColor={
             type="password"
             name="password"
             value={Password}
+            required
             onChange={e=>setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button block size="lg" type="submit" disabled={()=>{   validateForm()}}>
+        <Button  className="btn-login" block size="lg" type="submit" disabled={()=>{   validateForm()}}>
           Login
         </Button>
 <br/>

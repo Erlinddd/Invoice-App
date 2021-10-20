@@ -15,12 +15,13 @@ import RegistrationForm from './components/RegistrationForm';
 import NotFound from './components/NotFound';
 import Searchdata from './components/Searchdata';
 import  PrivateRoutes  from './components/PrivateRoutes';
-
 import DynamicChart from './components/chart';
- 
+
 
 const App=({props})=> {
 const [loading,setLoading]=useState(true);
+const [darkMode, setDarkMode] = useState(false);
+
 useEffect(() => {
   setTimeout(() => {
     setLoading(false);
@@ -34,6 +35,8 @@ const nav={
 marginBottom:"30px"
 }
 return (
+
+
 <Router >
   <Container>
     <Row>
@@ -63,6 +66,7 @@ return (
 {/* <Route path="/charts" component={DynamicChart}/> */}
 
   </div>
+  
 
   <Route  component={NotFound}>
     

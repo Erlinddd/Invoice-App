@@ -41,9 +41,9 @@ const AddConsumer = (props) => {
 		history.push('/lista/bleresi');
 	}
             return (    
-              <div class="container h-100">
-              <div class="align-items-center h-100">
-                <div class="col-12 mx-auto">
+           
+ <div className="container">
+
 
 <Card className={"border border-dark bg-dark text-white"}>
 <Card.Header>  <FontAwesomeIcon  style={{marginLeft:"20px"}} icon={faPlusSquare} />  Add Consumer</Card.Header>
@@ -94,7 +94,6 @@ const AddConsumer = (props) => {
  className={"bg-dark text-white"}
   placeholder="Contact" />
   </Form.Group>
-  </Form.Row>
   <div className=" bg-dark">
       <label className="mr-sm-8" for="inlineFormCustomSelect">Rajoni</label>
       <select className=" bg-dark text-white  custom-select mr-sm-8" id="inlineFormCustomSelect"  onChange={ rajoniOnChange }  >
@@ -105,6 +104,8 @@ const AddConsumer = (props) => {
         
       </select>
     </div>
+  </Form.Row>
+ 
 
 </Card.Body>
 <Card.Footer style={{textAlign:"center"}}>
@@ -123,9 +124,7 @@ const AddConsumer = (props) => {
 </Card.Footer>
 </Form>
 </Card>
-     </div>
-     </div>
-     </div>
+</div>
     );
 }
  

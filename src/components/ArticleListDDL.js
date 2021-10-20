@@ -13,6 +13,8 @@ import axiosInstance from './axios'
 import { enGB } from 'date-fns/locale'
 import { DatePicker } from 'react-nice-dates'
 import 'react-nice-dates/build/style.css'
+import * as ReactBootStrap from 'react-bootstrap'
+
 toast.configure();
 
 export const MyContext=createContext();
@@ -31,6 +33,7 @@ selectedConsumer:'',
 data:new Date(),
 totalInvoiceValue:0,
 validated:false,
+
 }
 
 
@@ -89,7 +92,7 @@ const options = data.map(d => ({
 }))
 
 this.setState({items: options})
-
+this.setState({loading:true});
 }
 
 handleChange(e){
@@ -185,129 +188,135 @@ render() {
  
 const {items,selectedItems,consumer,selectedConsumer,data}=this.state;
 return ( 
+  <div>
   
-  <form >
-
-  <motion.div
-  // initial={{oppacity:0}}
-  // animate={{oppacity:1}}
-  // transition={{delay:1.5,duration:1.5}}
-  initial={{x:'-100vh'}}
-  animate={{x:0}}
-  transition={{type:'spring',stiffness:120}}
-  >
+  {this.state.loading ?    <form > 
+    
+    {/* <ReactBootStrap.Spinner animation="border" /> */}
+    <motion.div
+    // initial={{oppacity:0}}
+    // animate={{oppacity:1}}
+    // transition={{delay:1.5,duration:1.5}}
+    initial={{x:'-100vh'}}
+    animate={{x:0}}
+    transition={{type:'spring',stiffness:120}}
+    >
+        
+  
+  <div>
+  
+  
+  
+    <div style={{"display":this.state.show ? "block" : "none"}}>
       
-
-<div>
-
-
-
-  <div style={{"display":this.state.show ? "block" : "none"}}>
-    
-    <MyToast show = {this.state.show} message={ "Fatura u regjistrua me sukses"}   type = {"success"}/>
-     </div>
- 
-  <Alert variant="success">
- 
-  <Alert.Heading>
-    <h6> Create an Invoice  </h6>        
-
-
-    <h6 style={{marginLeft:"650px"}} >Select the Date <DatePicker date={data} onDateChange={this.onChange} locale={enGB} dateFormat="YYYY-MM-D HH:m"
-   timeFormat="HH:mm">
-      {({ inputProps, focused }) => (
-        <input
-          className={'input' + (focused ? ' -focused' : '')}
-          {...inputProps}
-        />
-      )}
-    </DatePicker></h6>
-
-
-    </Alert.Heading>
-  
-    <hr/>
-    <p>Select the consumer</p>
-    
-    <select required  className="form-control slct"  value={selectedConsumer}  onChange={e => { this.setState({selectedConsumer: parseInt(e.target.value)}) }}  >
-    
-    <option value="" >Select from the list</option>
-    { this.state.consumer.map((person,id) =>  <option key={id}  value={person.id}> {person.firstName} {person.lastName} </option> )} 
-  </select>{''}
+      <MyToast show = {this.state.show} message={ "Fatura u regjistrua me sukses"}   type = {"success"}/>
+       </div>
    
+    <Alert variant="success">
    
+    <Alert.Heading>
+      <h6> Create an Invoice  </h6>        
+  
+  <div className="date">
+  
+      <h6 style={{float:"right"}} >Select the Date <DatePicker date={data} onDateChange={this.onChange} locale={enGB} dateFormat="YYYY-MM-D HH:m"
+     timeFormat="HH:mm">
+        {({ inputProps, focused }) => (
+          <input
+            className={'input' + (focused ? ' -focused' : '')}
+            {...inputProps}
+          />
+        )}
+      </DatePicker></h6>
+  </div>
+  
+      </Alert.Heading>
+    
+      <hr/>
+      <p>Select the consumer</p>
+      
+      <select required  className="form-control slct"  value={selectedConsumer}  onChange={e => { this.setState({selectedConsumer: parseInt(e.target.value)}) }}  >
+      
+      <option value="" >Select from the list</option>
+      { this.state.consumer.map((person,id) =>  <option key={id}  value={person.id}> {person.firstName} {person.lastName} </option> )} 
+    </select>{''}
+     
+     
+     
+  
+      {''}
+      <hr/>
+      
+      <p>Select the article</p>
+      
+      <Select  options={this.state.items}  value={selectedItems} placeholder="Select article from the list... "  onChange={this.handleChange.bind(this)} isMulti  />  
+  
+      
+  {/* //<p>You have selected <strong>{this.state.emri}</strong> whose id is <strong>{this.state.id}</strong></p> */}
+  <Table striped bordered hover>
+  <thead>
+  <tr>
+  <th>ID</th>
+  <th>Name</th>
+  <th>Quantity</th>
+  <th>Price</th>
+  <th>Value</th>
+  
+  
+  
+  </tr>
+  </thead>
+  <tbody>
+  {
+    
+     this.state.selectedItems.map((item) => (
+  <tr key={item.value}>
+  <td>{item.value}</td>
+  <td>{item.label}</td>
+  
+  <td>
+    <input id={item.value} type="text"  className="form-control" value={item.sasia} onChange={(event) => { 
+    if (event.target.value === "") event.target.value = 0; this.onEdit(parseInt(event.target.id), parseFloat(event.target.value))} }>
+  
+    </input>
+    </td>
+  
+  <td>{item.cmimi}</td>
+  <td id="total">{item.sasia * item.cmimi } </td>
+  
+  </tr>
+  
+        ))
+    } 
    
-
-    {''}
-    <hr/>
-    
-    <p>Select the article</p>
-    
-    <Select  options={this.state.items}  value={selectedItems} placeholder="Select article from the list... "  onChange={this.handleChange.bind(this)} isMulti  />  
-
-    
-{/* //<p>You have selected <strong>{this.state.emri}</strong> whose id is <strong>{this.state.id}</strong></p> */}
-<Table striped bordered hover>
-<thead>
-<tr>
-<th>ID</th>
-<th>Name</th>
-<th>Quantity</th>
-<th>Price</th>
-<th>Value</th>
-
-
-
-</tr>
-</thead>
-<tbody>
-{
+  </tbody>
   
-   this.state.selectedItems.map((item) => (
-<tr key={item.value}>
-<td>{item.value}</td>
-<td>{item.label}</td>
-
-<td>
-  <input id={item.value} type="text"  className="form-control" value={item.sasia} onChange={(event) => { 
-  if (event.target.value === "") event.target.value = 0; this.onEdit(parseInt(event.target.id), parseFloat(event.target.value))} }>
-
-  </input>
-  </td>
-
-<td>{item.cmimi}</td>
-<td id="total">{item.sasia * item.cmimi } </td>
-
-</tr>
-
-      ))
-  } 
- 
-</tbody>
-
-</Table>
-
-<p style={{marginLeft:"820px"}}  >Vlera totale: {this.state.totalInvoiceValue}</p>
-  </Alert>
- 
-  <Button  onClick={this.submitData}
-   variant="primary" size="lg"  block >
-Submit 
-</Button>{' '}
-
-
-
-
+  </Table>
   
-{/* </div>
+  <p style={{marginLeft:"820px"}}  >Vlera totale: {this.state.totalInvoiceValue}</p>
+    </Alert>
+   
+    <Button  onClick={this.submitData}
+     variant="primary" size="lg"  block >
+  Submit 
+  </Button>{' '}
+  
+  
+  
+  
+    
+  {/* </div>
+  </div>
+  
+  
+  </div> */}
+  </div>
+  </motion.div>
+  </form>
+     :  <ReactBootStrap.Spinner animation="border" />} 
+ 
 </div>
-
-
-</div> */}
-</div>
-</motion.div>
-</form>
 )
 }
 }
-export default withRouter(ArticleListDDL)
+export default React.memo(withRouter(ArticleListDDL));
