@@ -184,7 +184,7 @@ artikulliList = (props) => {return this.props.history.push(`/lists`)};
     <Form.Group as={Col} controlId="formGridArtikulli" >
 
 <Form.Label>Artikulli</Form.Label>
-<Form.Control autoComplete="off" value={this.state.emri} onChange={this.artikulliChange} required name="emri" className="bg-dark text-white" type="text" placeholder="Article name" />
+<Form.Control className="over" autoComplete="off" value={this.state.emri} onChange={this.artikulliChange} required name="emri" className="bg-dark text-white" type="text" placeholder="Article name" />
 </Form.Group>
 
 <div className=" bg-dark">

@@ -107,7 +107,7 @@ const changeColor={
           />
         </Form.Group>
         <Button  className="btn-login" block size="lg" type="submit" disabled={()=>{   validateForm()}}>
-          Login
+        SIGN IN
         </Button>
 <br/>
         <p className="forgot-password text-right text-color-white" style={changeColor}>
