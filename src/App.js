@@ -20,7 +20,7 @@ import DynamicChart from './components/chart';
 
 const App=({props})=> {
 const [loading,setLoading]=useState(true);
-const [darkMode, setDarkMode] = useState(false);
+
 
 useEffect(() => {
   setTimeout(() => {
@@ -54,7 +54,7 @@ return (
       <br/>
       <br/>
       
-<PrivateRoutes   path="/bleresi" component={props=><AddConsumer {...props}/>}/>   
+ 
 <PrivateRoutes  path="/faturaCard/:id" component={props=><FaturaCard {...props}/>}/>   
 <PrivateRoutes  path="/add" component={props=><AddArticle {...props}/>}/>   
 <PrivateRoutes  path="/lists" component={ArticleLists}  component={props=><ArticleLists {...props}/>}/> 

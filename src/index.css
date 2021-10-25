@@ -19,6 +19,9 @@ code {
   }
 }
 
+.over{
+  overflow: scroll;
+}
 
 .btn-login:hover {
   

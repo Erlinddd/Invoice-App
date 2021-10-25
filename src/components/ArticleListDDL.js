@@ -192,11 +192,9 @@ return (
   
   {this.state.loading ?    <form > 
     
-    {/* <ReactBootStrap.Spinner animation="border" /> */}
+   
     <motion.div
-    // initial={{oppacity:0}}
-    // animate={{oppacity:1}}
-    // transition={{delay:1.5,duration:1.5}}
+    
     initial={{x:'-100vh'}}
     animate={{x:0}}
     transition={{type:'spring',stiffness:120}}
@@ -251,7 +249,6 @@ return (
       
       <Select  options={this.state.items}  value={selectedItems} placeholder="Select article from the list... "  onChange={this.handleChange.bind(this)} isMulti  />  
   
-      
   {/* //<p>You have selected <strong>{this.state.emri}</strong> whose id is <strong>{this.state.id}</strong></p> */}
   <Table striped bordered hover>
   <thead>

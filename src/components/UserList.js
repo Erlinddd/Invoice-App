@@ -13,14 +13,17 @@ import * as ReactBootStrap from 'react-bootstrap'
 
 
 import axiosInstance from './axios'
+import CreateUserPopUp from './openDialog/CreateUserPopUp'
 
 toast.configure();
 
 const UserList = (props) => {
     const [data, setData] = useState([]);
        const [loading,setLoading]=useState(false);   
-    
-    useEffect(() => {          
+       const [open, setOpen] = React.useState(false);
+       const [formData, setFormData] = useState({ FirstName: '', LastName: '', Street: '', City: '', PostalCode: '', Contact: '',RajoniId:''})
+   
+       useEffect(() => {          
             const GetData = async () => {  
               const result = await axiosInstance.get('/bleresi');  
               debugger;
@@ -28,30 +31,62 @@ const UserList = (props) => {
               console.log(result.data)
             };  
             GetData(); 
+   
             setLoading(true)
         },[])
 
+        const onChange = (e) => {
+          const { value, id } = e.target
+           console.log(value,id)
+          setFormData({ ...formData, [id]: value })
+        }
        
 
         const deleteConsumer = (id) => {  
           axiosInstance.delete('/bleresi/' + id,)  
                 .then((result) => {  
                alert("Deleted succesfully") 
-               props.history.push('/bleresi')
+               props.history.push('/Welcome')
 
                 });  
             };  
-       function Click(){
-     props.history.push('/bleresi',3000)
-          }
+    //    function Click(){
+    //  props.history.push('/bleresi',3000)
+    //       }
+
+          const handleClickOpen = () => {
+            setOpen(true);
+          };
+        
+          const handleClose = () => {
+            setOpen(false);
+          };
+         const handleFormSubmit=()=>{
+  
+            const data = { FirstName:formData.FirstName, LastName: formData.LastName, Street: formData.Street, City:formData.City, PostalCode: formData.PostalCode, Contact: formData.Contact,RajoniId:formData.RajoniId };  
+          axiosInstance.post("/bleresi", data)  
+          .then((result) => {
+            console.log("Res",result);  
+            props.history.push("/Welcome")
+            handleClose();
          
+            
+          });  
+         }
+      
+         const  rajoniOnChange=(e)=>{
+          debugger;
+           setFormData({...formData,RajoniId:e.target.value})
+         }
           
+
     return (
         <div style={{position:"absolut"}}  className="container">
   
           <Card className={"border border-dark bg-dark text-white"}>
            <Card.Header>  
-               <Button   variant="secondary" size="lg" block onClick={Click}> <FontAwesomeIcon icon={faPlus} /> Add Consumer</Button>
+               <Button   variant="secondary" size="lg" block onClick={handleClickOpen}  handleFormSubmit={handleFormSubmit}> <FontAwesomeIcon icon={faPlus} /> Add Consumer</Button>
+        
            </Card.Header>
            <Card.Body>     
            <h6>Number of consumer:{data.length}  </h6>         
@@ -64,7 +99,7 @@ const UserList = (props) => {
   <th>City</th>
   <th>PostalCode</th>
   <th>Contact</th>
-  <th>Edit/Delete</th>
+  <th>Edit/Delete </th>
 </tr>
 </thead>
 
@@ -83,8 +118,8 @@ const UserList = (props) => {
 
 <ButtonGroup>
     <Link className="btn btn-lg btn-outline-primary" to={`/editt/bleresi/${item.id}`}><FontAwesomeIcon icon={faEdit} /></Link>{' '}
- 
-      <Button size="lg" onClick={() => { deleteConsumer(item.id) }}  className="btn btn-lg btn-outline-danger" >   <FontAwesomeIcon icon={faTrash} /></Button>
+
+      <Button size="lg" onClick={() => { deleteConsumer(item.id) }}  className="btn btn-lg btn-outline"  style={{marginLeft:"5px"}}>   <FontAwesomeIcon icon={faTrash} /></Button>
   </ButtonGroup>
  </td>  
 </tr>  
@@ -95,6 +130,7 @@ const UserList = (props) => {
                </Table>
            </Card.Body>
        </Card>
+       <CreateUserPopUp rajoniOnChange={rajoniOnChange} data={formData} onChange={onChange} open={open} handleFormSubmit={handleFormSubmit} handleClose={handleClose} handleClickOpen={handleClickOpen} />
         </div>
       );
 }
