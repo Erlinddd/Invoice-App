@@ -16,17 +16,21 @@ import NotFound from './components/NotFound';
 import Searchdata from './components/Searchdata';
 import  PrivateRoutes  from './components/PrivateRoutes';
 import DynamicChart from './components/chart';
+import Cards from './components/Cards';
+
 
 
 const App=({props})=> {
 const [loading,setLoading]=useState(true);
 
 
-useEffect(() => {
-  setTimeout(() => {
-    setLoading(false);
-  }, 2500);
-})
+// useEffect(() => {
+//   setTimeout(() => {
+//     setLoading(false);
+//   }, 2500);
+// })
+
+
 
 const marginTop={
 marginTop:"20px"
@@ -46,10 +50,15 @@ return (
           <Login/>
         </Route>
         <Route path="/Registration">
+          
     <RegistrationForm/>
   </Route>
+  {/* <Route path="/cards">
+    <Cards/>
+    </Route> */}
   <div style={nav}>
       <NavigationBar/>
+
       <br/>
       <br/>
       <br/>
@@ -59,10 +68,11 @@ return (
 <PrivateRoutes  path="/add" component={props=><AddArticle {...props}/>}/>   
 <PrivateRoutes  path="/lists" component={ArticleLists}  component={props=><ArticleLists {...props}/>}/> 
 <PrivateRoutes   path="/edit/:id" component={props=><AddArticle {...props}/>}/>
-<PrivateRoutes   exact path="/Welcome"  component={props => <Welcome {...props}/>}  />
+<PrivateRoutes    path="/Welcome"  component={props => <Welcome {...props}/>}  />
 <PrivateRoutes    path="/lista/bleresi" component={props=><UserList {...props}/>}  />
 <PrivateRoutes   path="/editt/bleresi/:id"  component={props=><EditConsumer {...props}/>}  />
 <PrivateRoutes  path="/faturat"   component={props=><Searchdata {...props}/>}  /> 
+<PrivateRoutes  exact  path="/cards"   component={props=><Cards {...props}/>}  /> 
 {/* <Route path="/charts" component={DynamicChart}/> */}
 
   </div>

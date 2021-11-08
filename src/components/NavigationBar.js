@@ -7,6 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import {faPlus, faList, faSignOut,} from '@fortawesome/free-solid-svg-icons';
 import {motion}  from 'framer-motion'
 
+
 class NavigationBar extends Component {
     constructor(props){
        
@@ -39,7 +40,7 @@ class NavigationBar extends Component {
       <Nav className="me-auto">
          <Link to="/lists" className="nav-link" > <FontAwesomeIcon icon={faList} size="lg"  /> {'  ' } Lists of Article</Link>                  
                   <Link to="/lista/bleresi" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Lists of Costumer</Link>
-                  <Link to="/faturat" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Lists of reports</Link>
+                  <Link to="/faturat" className="nav-link"> <FontAwesomeIcon icon={faList}  size="lg" />  {'  '}Dashboard</Link>
    <Button  variant="info" >Hello {localStorage.getItem("user")}</Button> 
                      
                       <Button style={{marginLeft:"5px"}} variant="secondary"   onClick={this.artikulliList}> Log Out</Button>
@@ -48,8 +49,15 @@ class NavigationBar extends Component {
     </Navbar.Collapse>
   </Container>
 </Navbar>
+
             </motion.div>
         )
+
+
+
+
+
+
     }
 }
 

@@ -171,6 +171,7 @@ artikulliList = (props) => {return this.props.history.push(`/lists`)};
 
     render() {
         return (
+            <div>
             <div className="App">
  <div style={{"display":this.state.show ? "block" : "none"}}>
 <MyToast show = {this.state.show} message={this.state.id ? "Artikulli ndryshoj me sukses" : "Artikulli u shtua me sukses"} type = {"success"}/>
@@ -255,7 +256,7 @@ pauseOnHover
     </Card.Footer>
     </Form>
     </Card>
- 
+    </div>
          </div>
         )
     }

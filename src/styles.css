@@ -113,3 +113,11 @@
     padding: 10px;
   }
   
+
+  .cards-position {
+   
+      display: flex;
+      justify-content: center;
+      flex-direction: row;
+   
+  }

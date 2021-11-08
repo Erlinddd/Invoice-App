@@ -8,6 +8,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import {motion} from 'framer-motion';
 import axiosInstance from './axios'
 import { GoogleLogin, GoogleLogout } from 'react-google-login';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
+import Loader from "react-loader-spinner";
 
 toast.configure();
 const changeColor={
@@ -24,7 +26,7 @@ const changeColor={
   const [error,setError]=useState(false);
   const [loading,setLoading]=useState(false);
   const[show,setShow]=useState(false)
-
+ const [loggedInState,setLoggedInState]=useState();
     const  apiUrl="/login/authenticate";
 
   function validateForm() {
@@ -33,6 +35,7 @@ const changeColor={
   const loginUser=(e)=>{
     e.preventDefault()
 
+ setLoggedInState("loggin in");
 
     
     let item={UserName,Password};
@@ -46,6 +49,7 @@ const changeColor={
     }).then(response=>{
       setLoading(false);
       toast.success("Login successfully!!");
+    
       localStorage.setItem("user",UserName)
       setShow({"show":true})
     
@@ -67,10 +71,10 @@ const changeColor={
   }
 
   const loginList=()=>{
-    props.history.push('/Welcome')
+    props.history.push('/cards')
   }
  
-  
+
 
   return (
     <motion.div className="Login"
@@ -80,7 +84,27 @@ const changeColor={
     >
        <div  className="text-center" style={changeColor}>  
     
+      
+
+    
+{/*    
+    {loggedInState === "logging in" ?  <Loader
+      type="Puff"
+      color="#00BFFF"
+      height={100}
+      width={100}
+      timeout={3000} //3 secs
+    /> :""  } */}
+    
+    <Loader
+      type="Puff"
+      color="#00BFFF"
+      height={100}
+      width={100}
+      timeout={3000}/>
+    
   
+ 
 
                   <motion.h1 className="h4 text-gray-900 mb-4" id="my header">Login</motion.h1>  
                 </div> 

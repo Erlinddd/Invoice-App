@@ -11,16 +11,25 @@ import "react-datepicker/dist/react-datepicker.css";
 import {Link} from 'react-router-dom'
 import { debuggerStatement } from '@babel/types';
 import DynamicChart from './chart';
+import { AgGridReact } from "ag-grid-react";
+
+import "ag-grid-community/dist/styles/ag-grid.css";
+import "ag-grid-community/dist/styles/ag-theme-alpine.css";
 
 export class Searchdata extends Component {  
 constructor(props) {  
 super(props)  
 
 this.state = {  
+    columnDefs:[
+  {headerName:"firstName",field:"firstname"},
+  {headerName:"lastName",field:"lastname"},
+    ],
 faturadate: [],  
 startdate: '' ,  
 enddate:'',
 fatura:'',
+rowData:null,
 }  
 }  
 Changedate = (e) => {    
@@ -79,6 +88,7 @@ return this.props.history.push('/Welcome');
 
 });  
 };
+
 
 render() {  
 return (  
@@ -140,6 +150,7 @@ return  <tr key={index}>
 </table>  
 
 <DynamicChart/>
+
 </div>  
 )  
 }  

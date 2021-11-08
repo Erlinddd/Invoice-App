@@ -22,7 +22,8 @@ const UserList = (props) => {
        const [loading,setLoading]=useState(false);   
        const [open, setOpen] = React.useState(false);
        const [formData, setFormData] = useState({ FirstName: '', LastName: '', Street: '', City: '', PostalCode: '', Contact: '',RajoniId:''})
-   
+
+
        useEffect(() => {          
             const GetData = async () => {  
               const result = await axiosInstance.get('/bleresi');  
@@ -45,14 +46,13 @@ const UserList = (props) => {
         const deleteConsumer = (id) => {  
           axiosInstance.delete('/bleresi/' + id,)  
                 .then((result) => {  
-               alert("Deleted succesfully") 
+               const confirm=window.confirm("Are your sure to delete the client")
+               console.log(confirm)
                props.history.push('/Welcome')
 
                 });  
             };  
-    //    function Click(){
-    //  props.history.push('/bleresi',3000)
-    //       }
+    
 
           const handleClickOpen = () => {
             setOpen(true);
@@ -79,11 +79,13 @@ const UserList = (props) => {
            setFormData({...formData,RajoniId:e.target.value})
          }
           
+         
 
     return (
         <div style={{position:"absolut"}}  className="container">
   
           <Card className={"border border-dark bg-dark text-white"}>
+           
            <Card.Header>  
                <Button   variant="secondary" size="lg" block onClick={handleClickOpen}  handleFormSubmit={handleFormSubmit}> <FontAwesomeIcon icon={faPlus} /> Add Consumer</Button>
         

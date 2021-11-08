@@ -28,16 +28,17 @@ code {
   border:1px  solid;
   box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24),0 17px 50px 0 rgba(0,0,0,0.19);
 }
-/* .hamburger{
-  display:none;
+
+
+.cards-position {
+   
+  display: grid;
+  place-items: center;
+  justify-content: center; 
+  flex-direction: row;
+  padding: 10px;
+  grid-gap: 20px;
+  align-content: center; 
+  grid: 350px 200px / 1fr 1fr;
+  justify-items: center;
 }
-
-@media (max-width:767px){
-  .hamburger{
-    display:flex;
-    padding-top:10px;
-    margin-left:10px;
-    z-index:10;
-  }
-} */
-
