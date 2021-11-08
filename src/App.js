@@ -49,6 +49,9 @@ return (
         <Route  exact path="/" component={Login} >
           <Login/>
         </Route>
+        <Route component={NotFound}>
+    
+    </Route> 
         <Route path="/Registration">
           
     <RegistrationForm/>
@@ -78,9 +81,7 @@ return (
   </div>
   
 
-  <Route  component={NotFound}>
-    
-    </Route> 
+ 
         </Switch>
   
       </Col>
