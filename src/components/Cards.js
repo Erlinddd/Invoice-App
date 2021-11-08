@@ -10,6 +10,12 @@ import AssessmentIcon from '@mui/icons-material/Assessment';
 import ReceiptIcon from '@mui/icons-material/Receipt';
 export function Cards() {
 return (
+     
+    <motion.div 
+    initial={{y:-250}}
+    animate={{y:-7}}
+    transition={{type:'spring',stiffness:100}}>
+  
     <div  className="cards-position">
       <Card
         bg="success"
@@ -81,6 +87,7 @@ return (
         </Card.Body>
       </Card>
     </div>
+    </motion.div>
   )};
 
 
