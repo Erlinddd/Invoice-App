@@ -48,14 +48,15 @@ const changeColor={
       }
     }).then(response=>{
       setLoading(false);
+      
       toast.success("Login successfully!!");
     
       localStorage.setItem("user",UserName)
       setShow({"show":true})
-    
+     
            setTimeout(() => setShow({"show":false}), 3000);
-           setTimeout(() => loginList(),1000) 
-
+           setTimeout(() => loginList(),1000) ;
+         
    localStorage.setItem("token",response.data)
  
     }).catch (error=>{
@@ -77,6 +78,9 @@ const changeColor={
 
 
   return (
+    <div id="main">
+
+  
     <motion.div className="Login"
     initial={{x:'-100vh'}}
     animate={{x:0}}
@@ -96,17 +100,17 @@ const changeColor={
       timeout={3000} //3 secs
     /> :""  } */}
     
-    <Loader
+    {/* <Loader
       type="Puff"
       color="#00BFFF"
       height={100}
       width={100}
-      timeout={3000}/>
+      timeout={3000}/> */}
     
   
  
 
-                  <motion.h1 className="h4 text-gray-900 mb-4" id="my header">Login</motion.h1>  
+                  <motion.h1 className="h4 text-gray-900 mb-4" id="my header">LOGIN</motion.h1>  
                 </div> 
       <Form onSubmit={loginUser}>
         <Form.Group size="lg" controlId="email">
@@ -130,7 +134,7 @@ const changeColor={
             onChange={e=>setPassword(e.target.value)}
           />
         </Form.Group>
-        <Button  className="btn-login" block size="lg" type="submit" disabled={()=>{   validateForm()}}>
+        <Button  className="glow-on-hover" block size="lg" type="submit" disabled={()=>{   validateForm()}}>
         SIGN IN
         </Button>
 <br/>
@@ -140,6 +144,7 @@ const changeColor={
       </Form>
       
     </motion.div>
+    </div>
   );
 }
 export default withRouter(Login)

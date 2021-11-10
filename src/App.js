@@ -46,12 +46,14 @@ return (
     <Row>
       <Col lg={12} style={marginTop}>
         <Switch>
+         
         <Route  exact path="/" component={Login} >
           <Login/>
         </Route>
-        {/* <Route component={NotFound}>
+   
+        {/* <Route component={NotFound}/>
     
-    </Route>  */}
+     */}
         <Route path="/Registration">
           
     <RegistrationForm/>
@@ -59,6 +61,7 @@ return (
   {/* <Route path="/cards">
     <Cards/>
     </Route> */}
+  
   <div style={nav}>
       <NavigationBar/>
 
@@ -72,6 +75,7 @@ return (
 <PrivateRoutes  path="/lists" component={ArticleLists}  component={props=><ArticleLists {...props}/>}/> 
 <PrivateRoutes   path="/edit/:id" component={props=><AddArticle {...props}/>}/>
 <PrivateRoutes    path="/Welcome"  component={props => <Welcome {...props}/>}  />
+
 <PrivateRoutes    path="/lista/bleresi" component={props=><UserList {...props}/>}  />
 <PrivateRoutes   path="/editt/bleresi/:id"  component={props=><EditConsumer {...props}/>}  />
 <PrivateRoutes  path="/faturat"   component={props=><Searchdata {...props}/>}  /> 
@@ -81,7 +85,7 @@ return (
   </div>
   
 
- 
+  <Route path="*" component={NotFound}/>
         </Switch>
   
       </Col>

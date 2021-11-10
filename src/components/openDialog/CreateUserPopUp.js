@@ -17,6 +17,7 @@ const {id,FirstName,LastName,Contact,City,Street,PostalCode,RajoniId}=data
 
   return (
     <div>
+      
      
       <Dialog
       
@@ -30,7 +31,7 @@ const {id,FirstName,LastName,Contact,City,Street,PostalCode,RajoniId}=data
         <DialogContent>
         <form>
              <TextField id="FirstName"  value={FirstName} onChange={e=>onChange(e)}placeholder="Enter name" label="Name" variant="outlined" margin="dense" fullWidth />
-             <TextField id="LastName"    value ={LastName} onChange={e=>onChange(e)}  placeholder="Enter email" label="Email" variant="outlined" margin="dense" fullWidth />
+             <TextField id="LastName"    value ={LastName} onChange={e=>onChange(e)}  placeholder="Enter lastname" label="Lastname" variant="outlined" margin="dense" fullWidth />
              <TextField id="Street"    value={Street} onChange={e=>onChange(e)} placeholder="Street" label="Street" variant="outlined" margin="dense" fullWidth />
              <TextField id="City" value={City} onChange={e=>onChange(e)}   placeholder="City" label="City" variant="outlined" margin="dense" fullWidth />
              <TextField id="PostalCode"     value={PostalCode} onChange={e=>onChange(e)} placeholder="PostalCode" label="PostalCode" variant="outlined" margin="dense" fullWidth />

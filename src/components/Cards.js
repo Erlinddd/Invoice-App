@@ -8,7 +8,17 @@ import AddShoppingCartIcon from '@mui/icons-material/AddShoppingCart';
 import AddCircleIcon from '@mui/icons-material/AddCircle';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import ReceiptIcon from '@mui/icons-material/Receipt';
+import { makeStyles } from "@material-ui/core/styles";
+
+// const useStyles = makeStyles(theme => ({
+//   customHoverFocus: {
+//     "&:hover, &.Mui-focusVisible": { backgroundColor: "#f1f1f1" }
+//   }
+// }));
+
+
 export function Cards() {
+  // const classes = useStyles();
 return (
      
     <motion.div 
@@ -20,7 +30,7 @@ return (
       <Card
         bg="success"
    text="white"
-        style={{ width: "18rem" }}
+        style={{ width: "28rem" }}
         className="mb-2"
       >
         <Card.Header> Consumer</Card.Header>
@@ -29,7 +39,7 @@ return (
           <Card.Text >
            
             <Link to="/lista/bleresi" className="nav-link"> 
-           <h2 style={{color:"white",textAlign:"center"}}> <AddCircleIcon color="white" sx={{ fontSize: 40 }} /> </h2>
+           <h2 style={{color:"white",textAlign:"center"}}> <AddCircleIcon  color="white" sx={{ fontSize: 40 }} /> </h2>
             </Link> 
           </Card.Text>
         </Card.Body>
@@ -38,7 +48,7 @@ return (
       <Card
         bg="warning"
    text="white"
-        style={{ width: "18rem" }}
+        style={{ width: "28rem" }}
         className="mb-2"
       >
         <Card.Header> Article</Card.Header>
@@ -56,7 +66,7 @@ return (
       <Card
         bg="danger"
    text="white"
-        style={{ width: "18rem" }}
+        style={{ width: "28rem" }}
         className="mb-2"
       >
         <Card.Header>Invoice</Card.Header>
@@ -73,7 +83,7 @@ return (
       <Card
         bg="primary"
    text="white"
-        style={{ width: "18rem" }}
+        style={{width: "28rem" }}
         className="mb-2"
       >
         <Card.Header>Dashboard</Card.Header>

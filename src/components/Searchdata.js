@@ -30,8 +30,10 @@ startdate: '' ,
 enddate:'',
 fatura:'',
 rowData:null,
+
 }  
-}  
+}
+
 Changedate = (e) => {    
 this.setState({    
 startdate: e    
@@ -43,14 +45,18 @@ enddate: e
 });    
 };  
 componentDidMount() {  
+    // const f=this.faturadate.map(bill=>bill.faturaArtikullis.vlera).reduce((acc,bill)=>bill+acc)
 debugger;
 axiosInstance.get('/fatura').then(response => {  
-console.log('faturat',response.data);  
+console.log('faturatt',response.data);  
+
+
 this.setState({  
-faturadate: response.data  
-});  
+faturadate: response.data
+});
 });  
 }  
+
 
 
 
@@ -60,7 +66,7 @@ const response=await
 axiosInstance.get(`/fatura/` + IdFatura)
 this.setState(response.data)
 localStorage.setItem("FaturaEselektuar",JSON.stringify(response.data))
-console.log(response.data)
+console.log("FF",response.data)
 
 return this.props.history.push('/faturaCard/'+IdFatura)
 }
@@ -139,9 +145,11 @@ return  <tr key={index}>
     <td  className="text-white">{p?.bleresi?.firstName}</td>  
     <td  className="text-white" >{ moment(p.data).format("YYYY-MM-DD hh:mm")}</td>  
 <td  className="text-white" ><Link  onClick={this.getById}  id={"btn_"+p.id} className="btn btn-lg btn-outline-primary text-white" >Printo Fakturen</Link>{' '}</td>
+
 <td><ButtonGroup>
 <Button size="lg"  onClick={() => { this.deleteFatura(p.id) }} className="btn btn-lg btn-outline-danger" style={{marginLeft:"5px"}} >  <FontAwesomeIcon icon={faTrash} /></Button>
 </ButtonGroup></td>
+  
 </tr>  
 })   
 }  

@@ -4,7 +4,13 @@ import axios from 'axios'
 import moment from 'moment'
 
 const FaturaCard = (props)  =>{
- 
+  const [image, setImage] = useState(null)
+
+  const onImageChange = (event) => {
+   if (event.target.files && event.target.files[0]) {
+     setImage(URL.createObjectURL(event.target.files[0]));
+   }
+  }
 
 const [fat,setFat]=useState({"id":0,"data":"","idBleresi":0,"faturaArtikullis":[],"bleresi":""})
 useEffect(()=>{
@@ -20,11 +26,15 @@ window.print();
     return ( 
         
         <div>
-          
-          
+   
           
   
             <Card text="dark" className="text-center">
+            {/* <div>
+    <input type="file" onChange={onImageChange} className="filetype" />
+    <img src={image} alt="preview image" />
+  </div> */}
+
             <Card.Header>Fatura u krijua nga:<Form.Label style={{marginLeft:"2px"}}>  
               {localStorage.getItem("user")} </Form.Label> </Card.Header>
   <Card.Header>FaturaId:<Form.Label>{fat.id} </Form.Label> </Card.Header>
@@ -74,8 +84,16 @@ window.print();
 <Button onClick={printFatura}>Print the Invoice</Button>
 <Button variant="secondary"  href="mailto:someone@example.com">Sent with Email </Button>
 </ButtonGroup>
-</Card> 
 
+</Card> 
+<div class="button-wrapper">
+  <span class="label">
+    Upload Logo of Company
+  </span>
+  
+    <input type="file"   onChange={onImageChange} name="upload" id="upload" className="upload-box" placeholder="Upload File"/>
+    <img src={image}/>
+</div>
 
 
               
